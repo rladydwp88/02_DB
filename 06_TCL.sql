@@ -43,9 +43,10 @@
  *
  * */
 
--- 새로운 데이터를 DEPARTMENT2에 INSERT
+-- 새로운 데이터 DEPARTMENT2에 INSERT
 
 SELECT * FROM DEPARTMENT2;
+
 
 INSERT INTO DEPARTMENT2 VALUES('T1', '개발1팀', 'L2');
 INSERT INTO DEPARTMENT2 VALUES('T2', '개발2팀', 'L2');
@@ -59,10 +60,10 @@ SELECT * FROM DEPARTMENT2;
 -- 트랜잭션에 INSERT 3개 있음
 
 -- ROLLBACK 후 확인
-ROLLBACK; -- 마지막 커밋시점까지 돌아감
-
+ROLLBACK; -- 마지막 커밋시점까지 되돌아감.
 SELECT * FROM DEPARTMENT2;
 -- 개발1, 개발2, 개발3 팀 롤백됨
+
 
 -- COMMIT 후 ROLLBACK이 되는지 확인
 INSERT INTO DEPARTMENT2 VALUES('T1', '개발1팀', 'L2');
@@ -72,14 +73,14 @@ INSERT INTO DEPARTMENT2 VALUES('T3', '개발3팀', 'L2');
 -- INSERT 확인
 SELECT * FROM DEPARTMENT2;
 
-COMMIT; -- DB에 반영
+COMMIT; -- DB 에 반영
 
 ROLLBACK;
 
 -- COMMIT 후 ROLLBACK 안된다. DB에 이미 반영됨
 SELECT * FROM DEPARTMENT2;
 
-------------------------------------------------------------
+--------------------------------------------------------
 
 -- SAVEPOINT 확인
 
@@ -92,15 +93,19 @@ SAVEPOINT "SP2"; -- SAVEPOINT 지정
 INSERT INTO DEPARTMENT2 VALUES('T6', '개발6팀', 'L2');
 SAVEPOINT "SP3"; -- SAVEPOINT 지정
 
+
 SELECT * FROM DEPARTMENT2;
 
 ROLLBACK TO "SP1";
 
-SELECT * FROM DEPARTMENT2; -- 개발 4팀 남음
+
+SELECT * FROM DEPARTMENT2; -- 개발4팀 남음
 
 -- ROLLBACK TO "SP1" 구문 수행 시 이후에 설정된 SP2, SP3도 삭제됨
--- ROLLBACK TO "SP2";
--- SQL Error [1086] [72000]: ORA-01086:'SP2' 저장점이 이 세션에 설정되지 않았거나 부적합합니다.
+--ROLLBACK TO "SP2";
+-- SQL Error [1086] [72000]: ORA-01086: 'SP2' 저장점이 이 세션에 설정되지 않았거나 부적합합니다.
+
+
 
 INSERT INTO DEPARTMENT2 VALUES('T5', '개발5팀', 'L2');
 SAVEPOINT "SP2"; -- SAVEPOINT 지정
@@ -108,7 +113,8 @@ SAVEPOINT "SP2"; -- SAVEPOINT 지정
 INSERT INTO DEPARTMENT2 VALUES('T6', '개발6팀', 'L2');
 SAVEPOINT "SP3"; -- SAVEPOINT 지정
 
-SELECT * FROM DEPARTMENT2;
+
+SELECT * FROM DEPARTMENT2; 
 
 -- 개발팀 전체 삭제해보기
 
@@ -118,7 +124,7 @@ WHERE DEPT_ID LIKE 'T%';
 -- SP2 지점까지 롤백
 ROLLBACK TO "SP2";
 SELECT * FROM DEPARTMENT2;
--- 개발 6팀만 없음(SP2 지점 SAVEPOINT 전 개발 5팀, 개발 4팀 있었으므로)
+-- 개발6팀만 없음(SP2 지점 SAVEPOINT 전 개발5팀, 개발4팀 있었으므로)
 
 ROLLBACK TO "SP1";
 SELECT * FROM DEPARTMENT2;
@@ -126,8 +132,4 @@ SELECT * FROM DEPARTMENT2;
 -- ROLLBACK 수행
 ROLLBACK; -- 마지막 커밋시점 기준
 SELECT * FROM DEPARTMENT2;
--- 개발1, 2, 3팀 남음
-
-
-
-
+-- 개발1,2,3팀 남음
