@@ -136,7 +136,3 @@ REVOKE SELECT ON kh.EMPLOYEE FROM kyj_sample;
 -- 5.(smaple) EMPLOYEE 조회해보기
 SELECT * FROM kh.EMPLOYEE; --> 조회 안된다.
 
-
-
-
-
